@@ -1,15 +1,6 @@
-﻿/*
-  Dados públicos curados da Brambatti Odontologia.
-  Se endpoints forem configurados, o site atualiza os blocos dinamicamente.
-*/
+﻿/* Interações visuais e renderização dos depoimentos. */
 
-const BRAMBATTI_CONFIG = {
-  reviewsEndpoint: "",
-  instagramEndpoint: "",
-  facebookEndpoint: ""
-};
-
-const mockReviews = [
+const reviewsData = [
   {
     name: "César Britz",
     rating: 5,
@@ -112,68 +103,6 @@ const mockReviews = [
   }
 ];
 
-const mockInstagram = [
-  {
-    url: "https://www.instagram.com/reel/C3Yfr7FONtr/",
-    type: "reel",
-    title: "Sorriso que não aparece? Veja o post!"
-  },
-  {
-    url: "https://www.instagram.com/reel/CqYl3UiAIkm/",
-    type: "reel",
-    title: "Invisible Aligner é discreto, confortável e prático. Veja o post!"
-  },
-  {
-    url: "https://www.instagram.com/reel/DFGidWnyYJF/",
-    type: "reel",
-    title: "Transformação com naturalidade e resultado previsível. Veja o post!"
-  },
-  {
-    url: "https://www.instagram.com/reel/DFyTIp0uo4K/",
-    type: "reel",
-    title: "A transformação que você sempre quis, sem meses de espera. O segredo está na resina."
-  },
-  {
-    url: "https://www.instagram.com/reel/DF6JEvtuRfZ/",
-    type: "reel",
-    title: "Resultado estético com planejamento e segurança clínica."
-  },
-  {
-    url: "https://www.instagram.com/reel/C3tMmWtuC85/",
-    type: "reel",
-    title: "Ortodontia e correções com abordagem moderna."
-  },
-  {
-    url: "https://www.instagram.com/reel/DUjCLLJj6yy/",
-    type: "reel",
-    title: "Confiança, empatia e profissionalismo em cada atendimento."
-  }
-];
-
-const mockFacebook = [
-  {
-    title: "Foto oficial da equipe",
-    text: "Dr. Rafael e Dra. Daniela em conteúdo oficial da Brambatti Odontologia.",
-    image: "assets/images/fb-equipe-766724188904248.jpg",
-    date: "Facebook oficial",
-    url: "https://www.facebook.com/brambattiodontologia/photos/dr-rafael-e-dr-daniela-aqui-na-brambatti-odontologia-/766724188904248/"
-  },
-  {
-    title: "Facetas e estética",
-    text: "Publicação oficial sobre estética e planejamento do sorriso.",
-    image: "assets/images/fb-facetas-4464342056984104.jpg",
-    date: "Facebook oficial",
-    url: "https://www.facebook.com/brambattiodontologia/photos/a.4276380905780221/4464342056984104/?type=3"
-  },
-  {
-    title: "Restauração em resina",
-    text: "Fotos de resultado inicial e final publicadas no perfil oficial.",
-    image: "assets/images/fb-resina-935424452034220.jpg",
-    date: "Facebook oficial",
-    url: "https://www.facebook.com/brambattiodontologia/posts/fotos-inicial-e-final-da-restaura%C3%A7%C3%A3o-de-resina-em-um-dente-molar/935424452034220/"
-  }
-];
-
 function escapeHtml(value = "") {
   return value
     .replaceAll("&", "&amp;")
@@ -186,15 +115,6 @@ function escapeHtml(value = "") {
 function stars(rating = 5) {
   const count = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
   return `${"\u2605".repeat(count)}${"\u2606".repeat(5 - count)}`;
-}
-
-function getInstagramType(url = "") {
-  return url.includes("/reel/") ? "reel" : "post";
-}
-
-function getInstagramCode(url = "") {
-  const match = url.match(/instagram\.com\/(?:p|reel)\/([^/?#]+)/i);
-  return match ? match[1] : "instagram";
 }
 
 function initMenu() {
@@ -428,146 +348,11 @@ function renderReviews(items) {
     .join("");
 }
 
-function renderInstagram(items) {
-  const grid = document.getElementById("instagram-grid");
-  if (!grid) return;
-
-  const safeItems = Array.isArray(items) ? items.slice(0, 8) : [];
-  grid.innerHTML = safeItems
-    .map((item) => {
-      const rawUrl = typeof item === "string" ? item : item.url || item.permalink || "";
-      const type = (item.type || getInstagramType(rawUrl)).toLowerCase() === "reel" ? "reel" : "post";
-      const shortCode = getInstagramCode(rawUrl);
-      const url = escapeHtml(rawUrl || "https://www.instagram.com/brambatti_odontologia/");
-      const safeCode = escapeHtml(shortCode);
-      const title = escapeHtml(item.title || "Abrir conteúdo no Instagram");
-      const label = type === "reel" ? "Reel" : "Post";
-      return `
-        <a class="instagram-link-card reveal is-visible" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Abrir ${label} ${safeCode} no Instagram">
-          <span class="instagram-type ${type}">${label}</span>
-          <h4 class="instagram-code">${safeCode}</h4>
-          <p class="instagram-link-meta">${title}</p>
-        </a>
-      `;
-    })
-    .join("");
-}
-
-function renderFacebook(items) {
-  const feed = document.getElementById("facebook-feed");
-  if (!feed) return;
-
-  const safeItems = Array.isArray(items) ? items.slice(0, 3) : [];
-  feed.innerHTML = safeItems
-    .map((post) => {
-      const title = escapeHtml(post.title || "Destaque");
-      const text = escapeHtml(post.text || "");
-      const image = escapeHtml(post.image || "");
-      const url = escapeHtml(post.url || "https://www.facebook.com/brambattiodontologia/");
-      const date = escapeHtml(post.date || "Atualizado");
-
-      return `
-        <a href="${url}" class="facebook-card reveal is-visible" target="_blank" rel="noopener noreferrer">
-          <img src="${image}" alt="${title}" loading="lazy">
-          <div class="content">
-            <h4>${title}</h4>
-            <p>${text}</p>
-            <time>${date}</time>
-          </div>
-        </a>
-      `;
-    })
-    .join("");
-}
-
-async function loadReviews() {
+function loadReviews() {
   const status = document.getElementById("reviews-status");
-  const endpoint = BRAMBATTI_CONFIG.reviewsEndpoint?.trim();
-
-  if (!endpoint) {
-    renderReviews(mockReviews);
-    if (status) status.textContent = "Depoimentos reais de clientes da Brambatti Odontologia.";
-    initImageFallbacks();
-    return;
-  }
-
-  try {
-    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const data = await response.json();
-    const reviews = Array.isArray(data) ? data : data.reviews;
-    if (!Array.isArray(reviews) || !reviews.length) throw new Error("Sem avaliações");
-
-    renderReviews(reviews);
-    if (status) status.textContent = "Depoimentos atualizados.";
-    initImageFallbacks();
-  } catch (error) {
-    renderReviews(mockReviews);
-    if (status) status.textContent = "Exibindo depoimentos selecionados.";
-    initImageFallbacks();
-    console.warn("Falha ao carregar avaliações:", error);
-  }
-}
-
-async function loadInstagram() {
-  const status = document.getElementById("instagram-status");
-  const endpoint = BRAMBATTI_CONFIG.instagramEndpoint?.trim();
-
-  if (!endpoint) {
-    renderInstagram(mockInstagram);
-    if (status) status.textContent = "Posts e reels oficiais da Brambatti Odontologia.";
-    initImageFallbacks();
-    return;
-  }
-
-  try {
-    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const data = await response.json();
-    const posts = Array.isArray(data) ? data : data.posts;
-    if (!Array.isArray(posts) || !posts.length) throw new Error("Sem posts");
-
-    renderInstagram(posts);
-    if (status) status.textContent = "Conteúdos atualizados.";
-    initImageFallbacks();
-  } catch (error) {
-    renderInstagram(mockInstagram);
-    if (status) status.textContent = "Exibindo conteúdos selecionados.";
-    initImageFallbacks();
-    console.warn("Falha ao carregar Instagram:", error);
-  }
-}
-
-async function loadFacebook() {
-  const status = document.getElementById("facebook-status");
-  const endpoint = BRAMBATTI_CONFIG.facebookEndpoint?.trim();
-
-  if (!endpoint) {
-    renderFacebook(mockFacebook);
-    if (status) status.textContent = "Publicações oficiais da Brambatti Odontologia no Facebook.";
-    initImageFallbacks();
-    return;
-  }
-
-  try {
-    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const data = await response.json();
-    const posts = Array.isArray(data) ? data : data.posts;
-    if (!Array.isArray(posts) || !posts.length) throw new Error("Sem publicações");
-
-    renderFacebook(posts);
-    if (status) status.textContent = "Publicações atualizadas.";
-    initImageFallbacks();
-  } catch (error) {
-    renderFacebook(mockFacebook);
-    if (status) status.textContent = "Exibindo publicações selecionadas.";
-    initImageFallbacks();
-    console.warn("Falha ao carregar Facebook:", error);
-  }
+  renderReviews(reviewsData);
+  if (status) status.textContent = "Depoimentos reais de pacientes da Brambatti Odontologia.";
+  initImageFallbacks();
 }
 
 function setFooterYear() {
@@ -586,8 +371,6 @@ function init() {
   initImageFallbacks();
   setFooterYear();
   loadReviews();
-  loadInstagram();
-  loadFacebook();
 }
 
 document.addEventListener("DOMContentLoaded", init);
