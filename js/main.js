@@ -1,7 +1,7 @@
-/*
-  Integrações:
-  - Configure os endpoints abaixo para produção.
-  - O front está preparado para fallback em mock quando a API não está disponível.
+﻿/*
+  Integracoes:
+  - Configure os endpoints abaixo para producao.
+  - O front esta preparado para fallback em mock quando a API nao esta disponivel.
 */
 const BRAMBATTI_CONFIG = {
   googleReviewsEndpoint: "",
@@ -13,12 +13,12 @@ const mockReviews = [
   {
     name: "Carla M.",
     rating: 5,
-    comment: "Atendimento impecável. Tudo muito bem explicado e o resultado estético ficou natural."
+    comment: "Atendimento impecavel. Tudo muito bem explicado e o resultado estetico ficou natural."
   },
   {
-    name: "João P.",
+    name: "Joao P.",
     rating: 5,
-    comment: "Ambiente muito confortável, equipe atenciosa e excelente tecnologia na avaliação."
+    comment: "Ambiente confortavel, equipe atenciosa e excelente tecnologia na avaliacao."
   },
   {
     name: "Vanessa R.",
@@ -31,14 +31,14 @@ const mockReviews = [
     comment: "Planejamento completo e transparente. Me senti seguro em cada etapa do tratamento."
   },
   {
-    name: "Patrícia S.",
+    name: "Patricia S.",
     rating: 5,
-    comment: "Clínica linda, atendimento no horário e ótima experiência do início ao fim."
+    comment: "Clinica linda, atendimento no horario e otima experiencia do inicio ao fim."
   },
   {
     name: "Bruno T.",
     rating: 5,
-    comment: "Excelente equipe. Resolvi uma reabilitação com conforto e confiança."
+    comment: "Excelente equipe. Resolvi uma reabilitacao com conforto e confianca."
   }
 ];
 
@@ -60,7 +60,7 @@ const mockInstagram = [
   },
   {
     image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=700&q=80",
-    caption: "Recepção acolhedora e atendimento humanizado.",
+    caption: "Recepcao acolhedora e atendimento humanizado.",
     url: "https://www.instagram.com/brambatti_odontologia/"
   },
   {
@@ -70,22 +70,22 @@ const mockInstagram = [
   },
   {
     image: "https://images.unsplash.com/photo-1666214280775-2dbf3a6b9e77?auto=format&fit=crop&w=700&q=80",
-    caption: "Estética avançada com segurança clínica.",
+    caption: "Estetica avancada com seguranca clinica.",
     url: "https://www.instagram.com/brambatti_odontologia/"
   }
 ];
 
 const mockFacebook = [
   {
-    title: "Novidade na clínica",
-    text: "Agenda aberta para avaliação estética personalizada com foco em naturalidade.",
+    title: "Novidade na clinica",
+    text: "Agenda aberta para avaliacao estetica personalizada com foco em naturalidade.",
     image: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=800&q=80",
     date: "Atualizado recentemente",
     url: "https://www.facebook.com/brambattiodontologia/"
   },
   {
-    title: "Dica de cuidado diário",
-    text: "Pequenos hábitos fazem diferença na saúde bucal e na durabilidade dos tratamentos.",
+    title: "Dica de cuidado diario",
+    text: "Pequenos habitos fazem diferenca na saude bucal e na durabilidade dos tratamentos.",
     image: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=800&q=80",
     date: "Post institucional",
     url: "https://www.facebook.com/brambattiodontologia/"
@@ -103,7 +103,7 @@ function escapeHtml(value = "") {
 
 function stars(rating = 5) {
   const count = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
-  return `${"★".repeat(count)}${"☆".repeat(5 - count)}`;
+  return `${"\u2605".repeat(count)}${"\u2606".repeat(5 - count)}`;
 }
 
 function initMenu() {
@@ -149,12 +149,36 @@ function initHeaderState() {
   window.addEventListener("resize", setHeader);
 }
 
+function initScrollProgress() {
+  const bar = document.getElementById("scroll-progress");
+  if (!bar) return;
+
+  let rafId = null;
+  const update = () => {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = scrollable > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+    bar.style.width = `${(ratio * 100).toFixed(2)}%`;
+  };
+
+  const onScroll = () => {
+    if (rafId) return;
+    rafId = requestAnimationFrame(() => {
+      update();
+      rafId = null;
+    });
+  };
+
+  update();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+}
+
 function initRevealAnimations() {
   const revealEls = document.querySelectorAll(".reveal");
   if (!revealEls.length) return;
 
   revealEls.forEach((el, idx) => {
-    const delay = Math.min((idx % 7) * 70, 340);
+    const delay = Math.min((idx % 8) * 65, 380);
     el.style.transitionDelay = `${delay}ms`;
   });
 
@@ -167,7 +191,7 @@ function initRevealAnimations() {
         }
       });
     },
-    { rootMargin: "0px 0px -8% 0px", threshold: 0.2 }
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.18 }
   );
 
   revealEls.forEach((el) => observer.observe(el));
@@ -204,6 +228,75 @@ function initHeroParallax() {
   });
 }
 
+function initTiltEffects() {
+  const cards = document.querySelectorAll("[data-tilt]");
+  if (!cards.length) return;
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (prefersReduced) return;
+
+  cards.forEach((card) => {
+    if (card.dataset.tiltReady === "true") return;
+    card.dataset.tiltReady = "true";
+
+    let rafId = null;
+
+    const update = (event) => {
+      const bounds = card.getBoundingClientRect();
+      const rx = ((event.clientY - bounds.top) / bounds.height - 0.5) * -8;
+      const ry = ((event.clientX - bounds.left) / bounds.width - 0.5) * 8;
+      card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-4px)`;
+    };
+
+    card.addEventListener("mousemove", (event) => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => update(event));
+    });
+
+    card.addEventListener("mouseleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
+
+function initCounters() {
+  const counters = document.querySelectorAll("[data-count]");
+  if (!counters.length) return;
+
+  const animateCounter = (el) => {
+    const target = Number(el.dataset.count || 0);
+    const suffix = el.dataset.suffix || "";
+    if (!Number.isFinite(target)) return;
+
+    const duration = 1400;
+    const start = performance.now();
+
+    const frame = (now) => {
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - (1 - progress) * (1 - progress);
+      const value = Math.floor(target * eased);
+      el.textContent = `${value}${suffix}`;
+      if (progress < 1) requestAnimationFrame(frame);
+    };
+
+    requestAnimationFrame(frame);
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  counters.forEach((counter) => observer.observe(counter));
+}
+
 function renderReviews(items) {
   const grid = document.getElementById("reviews-grid");
   if (!grid) return;
@@ -215,10 +308,10 @@ function renderReviews(items) {
       const rating = Number(item.rating || 5);
       const comment = escapeHtml(item.comment || "");
       return `
-        <article class="review-card reveal is-visible">
+        <article class="review-card reveal is-visible" data-tilt>
           <header>
             <h3>${name}</h3>
-            <span class="rating" aria-label="Avaliação ${rating} de 5">${stars(rating)}</span>
+            <span class="rating" aria-label="Avaliacao ${rating} de 5">${stars(rating)}</span>
           </header>
           <p>${comment}</p>
         </article>
@@ -243,14 +336,14 @@ async function loadReviews() {
     const data = await response.json();
     const reviews = Array.isArray(data) ? data : data.reviews;
 
-    if (!Array.isArray(reviews) || !reviews.length) throw new Error("Sem avaliações");
+    if (!Array.isArray(reviews) || !reviews.length) throw new Error("Sem avaliacoes");
 
     renderReviews(reviews);
-    if (status) status.textContent = "Avaliações carregadas com sucesso da integração configurada.";
+    if (status) status.textContent = "Avaliacoes carregadas com sucesso da integracao configurada.";
   } catch (error) {
     renderReviews(mockReviews);
-    if (status) status.textContent = "Falha na integração de avaliações. Exibindo conteúdo mock.";
-    console.warn("Erro ao carregar avaliações:", error);
+    if (status) status.textContent = "Falha na integracao de avaliacoes. Exibindo conteudo mock.";
+    console.warn("Erro ao carregar avaliacoes:", error);
   }
 }
 
@@ -291,10 +384,10 @@ async function loadInstagram() {
     if (!Array.isArray(posts) || !posts.length) throw new Error("Sem posts");
 
     renderInstagram(posts);
-    if (status) status.textContent = "Feed do Instagram carregado da integração configurada.";
+    if (status) status.textContent = "Feed do Instagram carregado da integracao configurada.";
   } catch (error) {
     renderInstagram(mockInstagram);
-    if (status) status.textContent = "Falha na integração do Instagram. Exibindo conteúdo mock.";
+    if (status) status.textContent = "Falha na integracao do Instagram. Exibindo conteudo mock.";
     console.warn("Erro ao carregar Instagram:", error);
   }
 }
@@ -344,10 +437,10 @@ async function loadFacebook() {
     if (!Array.isArray(posts) || !posts.length) throw new Error("Sem posts");
 
     renderFacebook(posts);
-    if (status) status.textContent = "Conteúdo do Facebook carregado da integração configurada.";
+    if (status) status.textContent = "Conteudo do Facebook carregado da integracao configurada.";
   } catch (error) {
     renderFacebook(mockFacebook);
-    if (status) status.textContent = "Falha na integração do Facebook. Exibindo conteúdo mock.";
+    if (status) status.textContent = "Falha na integracao do Facebook. Exibindo conteudo mock.";
     console.warn("Erro ao carregar Facebook:", error);
   }
 }
@@ -360,10 +453,13 @@ function setFooterYear() {
 function init() {
   initMenu();
   initHeaderState();
+  initScrollProgress();
   initRevealAnimations();
   initHeroParallax();
+  initTiltEffects();
+  initCounters();
   setFooterYear();
-  loadReviews();
+  loadReviews().then(initTiltEffects);
   loadInstagram();
   loadFacebook();
 }

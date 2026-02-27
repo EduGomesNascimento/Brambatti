@@ -71,6 +71,18 @@ section {
   left: 1rem;
 }
 
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  z-index: 100;
+  background: linear-gradient(90deg, #e7d8c5, #8a6245 55%, #3b2a1f);
+  box-shadow: 0 6px 16px rgba(59, 42, 31, 0.24);
+  transition: width 110ms linear;
+}
+
 .container {
   width: var(--container);
   margin-inline: auto;
@@ -435,9 +447,12 @@ section {
 .about,
 .differentials,
 .treatments,
+.metrics,
 .reviews,
 .social,
+.team,
 .location,
+.insights,
 .final-cta {
   padding: var(--section-gap) 0;
 }
@@ -611,6 +626,61 @@ section {
   color: var(--text-soft);
 }
 
+[data-tilt] {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.metrics {
+  position: relative;
+  padding-top: clamp(40px, 5vw, 56px);
+  padding-bottom: clamp(40px, 5vw, 56px);
+}
+
+.metrics::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(90, 62, 43, 0.08), rgba(90, 62, 43, 0));
+  pointer-events: none;
+}
+
+.metrics-panel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.95rem;
+}
+
+.metrics-panel article {
+  background: rgba(255, 253, 250, 0.86);
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 10px 24px rgba(59, 42, 31, 0.08);
+  padding: 1.15rem 1rem;
+  transition: transform var(--speed-base), border-color var(--speed-base), box-shadow var(--speed-base);
+}
+
+.metrics-panel article:hover {
+  transform: translateY(-6px);
+  border-color: var(--line);
+  box-shadow: 0 16px 30px rgba(59, 42, 31, 0.12);
+}
+
+.metrics-panel h3 {
+  margin: 0;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.7rem, 3.3vw, 2.4rem);
+  line-height: 1;
+  color: var(--brown-dark);
+}
+
+.metrics-panel p {
+  margin: 0.55rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
 .integration-note {
   margin-bottom: 1.1rem;
   padding: 0.8rem 1rem;
@@ -716,6 +786,77 @@ section {
   color: var(--text-soft);
 }
 
+.team {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(231, 216, 197, 0.12), transparent 38%),
+    radial-gradient(circle at 84% 65%, rgba(231, 216, 197, 0.1), transparent 44%),
+    linear-gradient(140deg, #2d1f15 0%, #3b2a1f 60%, #4d3728 100%);
+  color: #f7efe4;
+}
+
+.team .section-eyebrow {
+  color: #e8d7c1;
+}
+
+.team .section-title {
+  color: #fff5e9;
+  max-width: 18ch;
+}
+
+.team .text-link {
+  color: #f2e3d0;
+  border-bottom-color: rgba(242, 227, 208, 0.5);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.team-card {
+  background: rgba(255, 248, 239, 0.08);
+  border: 1px solid rgba(255, 233, 208, 0.22);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform var(--speed-base), border-color var(--speed-base), box-shadow var(--speed-base), background-color var(--speed-base);
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 233, 208, 0.45);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.28);
+  background: rgba(255, 248, 239, 0.12);
+}
+
+.team-card img {
+  width: 100%;
+  aspect-ratio: 5 / 6;
+  object-fit: cover;
+  transition: transform var(--speed-slow), filter var(--speed-slow);
+}
+
+.team-card:hover img {
+  transform: scale(1.05);
+  filter: saturate(1.04);
+}
+
+.team-info {
+  padding: 0.95rem 0.9rem 1rem;
+}
+
+.team-info h3 {
+  margin: 0;
+  color: #fff4e8;
+  font-size: 0.98rem;
+}
+
+.team-info p {
+  margin: 0.5rem 0 0;
+  color: rgba(255, 245, 232, 0.86);
+  font-size: 0.86rem;
+}
+
 .post-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -811,6 +952,54 @@ section {
   border: 1px solid var(--line-soft);
   box-shadow: var(--shadow-soft);
   overflow: hidden;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.insight-card {
+  background: rgba(255, 252, 247, 0.82);
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 10px 24px rgba(59, 42, 31, 0.08);
+  overflow: hidden;
+  transition: transform var(--speed-base), box-shadow var(--speed-base), border-color var(--speed-base);
+}
+
+.insight-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 30px rgba(59, 42, 31, 0.14);
+  border-color: var(--line);
+}
+
+.insight-card img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: transform var(--speed-slow), filter var(--speed-slow);
+}
+
+.insight-card:hover img {
+  transform: scale(1.06);
+  filter: contrast(1.03);
+}
+
+.insight-card div {
+  padding: 1rem;
+}
+
+.insight-card h3 {
+  margin: 0;
+  color: var(--brown-dark);
+  font-size: 1rem;
+}
+
+.insight-card p {
+  margin: 0.55rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.92rem;
 }
 
 .final-cta {
@@ -940,14 +1129,29 @@ section {
 }
 
 .reveal {
+  --reveal-x: 0;
+  --reveal-y: 26px;
+  --reveal-scale: 1;
   opacity: 0;
-  transform: translateY(26px);
-  transition: opacity 760ms ease, transform 760ms ease;
+  transform: translate3d(var(--reveal-x), var(--reveal-y), 0) scale(var(--reveal-scale));
+  transition: opacity 760ms ease, transform 760ms ease, filter 760ms ease;
+  filter: blur(1.5px);
+}
+
+.reveal.from-left {
+  --reveal-x: -34px;
+  --reveal-y: 10px;
+}
+
+.reveal.from-right {
+  --reveal-x: 34px;
+  --reveal-y: 10px;
 }
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
 }
 
 @keyframes pulseOverlay {
@@ -999,7 +1203,10 @@ section {
 
   .cards-grid,
   .treatments-grid,
-  .reviews-grid {
+  .reviews-grid,
+  .metrics-panel,
+  .team-grid,
+  .insights-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1092,7 +1299,10 @@ section {
   .cards-grid,
   .treatments-grid,
   .reviews-grid,
-  .post-grid {
+  .post-grid,
+  .metrics-panel,
+  .team-grid,
+  .insights-grid {
     grid-template-columns: 1fr;
   }
 
