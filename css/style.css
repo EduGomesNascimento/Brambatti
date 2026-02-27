@@ -514,6 +514,32 @@ section {
   color: var(--text-soft);
 }
 
+.about-highlights {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.about-highlights li {
+  font-size: 0.92rem;
+  color: var(--brown-dark);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.about-highlights li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brown);
+  position: absolute;
+  left: 0;
+  top: 0.58rem;
+}
+
 .doctor-list {
   margin-top: 1.4rem;
   display: grid;

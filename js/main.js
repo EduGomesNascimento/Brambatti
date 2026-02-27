@@ -1,69 +1,69 @@
 ﻿/*
-  Integracoes:
-  - Configure os endpoints abaixo para producao.
-  - O front esta preparado para fallback em mock quando a API nao esta disponivel.
+  Dados públicos curados da Brambatti Odontologia.
+  Se endpoints forem configurados, o site atualiza os blocos dinamicamente.
 */
+
 const BRAMBATTI_CONFIG = {
-  googleReviewsEndpoint: "",
+  reviewsEndpoint: "",
   instagramEndpoint: "",
   facebookEndpoint: ""
 };
 
 const mockReviews = [
   {
-    name: "Cesar Britz",
+    name: "César Britz",
     rating: 5,
     comment: "Excelente profissional, muito atencioso e gentil, com grande qualidade e perfeccionismo nos trabalhos."
   },
   {
     name: "Ana Maria Malvarez",
     rating: 5,
-    comment: "Minha experiencia foi simplesmente perfeita. Atendimento acolhedor, respeitoso e com extrema qualidade humana."
+    comment: "Minha experiência foi simplesmente perfeita. Atendimento acolhedor, respeitoso e com extrema qualidade humana."
   },
   {
-    name: "Julia Couto",
+    name: "Júlia Couto",
     rating: 5,
-    comment: "Otimos profissionais e equipe com excelencia. Higiene, cuidados e ambiente impecaveis. Sou paciente ha mais de 10 anos."
+    comment: "Ótimos profissionais e equipe com excelência. Higiene, cuidados e ambiente impecáveis. Sou paciente há mais de 10 anos."
   },
   {
     name: "Brenda Brambatti Mentz",
     rating: 5,
-    comment: "Atendimento muito bom, profissionais e servico de qualidade. Super atenciosos."
+    comment: "Atendimento muito bom, profissionais e serviço de qualidade. Super atenciosos."
   },
   {
-    name: "Andre Machado",
+    name: "André Machado",
     rating: 5,
-    comment: "Dr. Rafael e um profissional diferenciado, com calma e dedicacao em cada procedimento e explicacoes claras."
+    comment: "Dr. Rafael é um profissional diferenciado, com calma e dedicação em cada procedimento e explicações claras."
   },
   {
     name: "Christofer Lutz",
     rating: 5,
-    comment: "Profissionais excelentes, competentes, educados e eticos. Ambiente confortavel e muito bem higienizado."
+    comment: "Profissionais excelentes, competentes, educados e éticos. Ambiente confortável e muito bem higienizado."
   },
   {
     name: "Laura Angelina",
     rating: 5,
-    comment: "Sou paciente ha anos e sempre fui muito bem atendida. Servico de primeira qualidade."
+    comment: "Sou paciente há anos e sempre fui muito bem atendida. Serviço de primeira qualidade."
   },
   {
-    name: "Onira Bonifacio",
+    name: "Onira Bonifácio",
     rating: 5,
-    comment: "Grande diferencial no atendimento, da recepcao ao consultorio, em um espaco amplo e bem estruturado."
+    comment: "Grande diferencial no atendimento, da recepção ao consultório, em um espaço amplo e bem estruturado."
   },
   {
     name: "Liane Maria de Freitas",
     rating: 5,
-    comment: "Excelente atendimento de toda a equipe da clinica. Me sinto feliz em ser cliente ha mais de 25 anos."
+    comment: "Excelente atendimento de toda a equipe da clínica. Me sinto feliz em ser cliente há mais de 25 anos."
   },
   {
     name: "Jorge Dahmer",
     rating: 5,
-    comment: "Equipe excelente e muito competente. Atendimento diferenciado e de alto nivel."
+    comment: "Equipe excelente e muito competente. Atendimento diferenciado e de alto nível."
   },
   {
-    name: "Carem Metz",
+    name: "Cárem Metz",
     rating: 5,
-    comment: "Atendimento sensacional desde a recepcao. Equipe especializada e muito atenciosa."
+    comment: "Atendimento sensacional desde a recepção. Equipe especializada e muito atenciosa."
   },
   {
     name: "Lisa Fraga",
@@ -71,29 +71,29 @@ const mockReviews = [
     comment: "Atendimento de qualidade, pontualidade e profissionais capacitados e competentes."
   },
   {
-    name: "Liziane Muller",
+    name: "Liziane Müller",
     rating: 5,
-    comment: "Hoje nao tenho mais medo de ir ao dentista. Equipe paciente, atenciosa e extremamente competente."
+    comment: "Hoje não tenho mais medo de ir ao dentista. Equipe paciente, atenciosa e extremamente competente."
   },
   {
     name: "Xena Guerreira",
     rating: 5,
-    comment: "Otimos profissionais, atendimento excelente e valores acessiveis para a qualidade do trabalho."
+    comment: "Ótimos profissionais, atendimento excelente e valores acessíveis para a qualidade do trabalho."
   },
   {
     name: "Ana Rita Zanatta",
     rating: 5,
-    comment: "Melhor atendimento, sorriso renovado e autoestima la em cima. Super recomendo."
+    comment: "Melhor atendimento, sorriso renovado e autoestima lá em cima. Super recomendo."
   },
   {
     name: "Paulo Winter",
     rating: 5,
-    comment: "Profissionais e auxiliares transmitem confianca e seguranca e finalizam com trabalho perfeito."
+    comment: "Profissionais e auxiliares transmitem confiança e segurança e finalizam com trabalho perfeito."
   },
   {
     name: "Lisete Debacker",
     rating: 5,
-    comment: "Atendimento sempre excelente, com experiencia e seguranca em todos os procedimentos."
+    comment: "Atendimento sempre excelente, com experiência e segurança em todos os procedimentos."
   },
   {
     name: "Marcelo Schossler",
@@ -103,12 +103,12 @@ const mockReviews = [
   {
     name: "Gilberto Dorneles Ebert",
     rating: 5,
-    comment: "Otima experiencia na clinica. Tratamento de excelencia e equipe muito querida."
+    comment: "Ótima experiência na clínica. Tratamento de excelência e equipe muito querida."
   },
   {
     name: "Felipe Strieder",
     rating: 5,
-    comment: "Excelente atendimento e profissionais incriveis."
+    comment: "Excelente atendimento e profissionais incríveis."
   }
 ];
 
@@ -116,39 +116,61 @@ const mockInstagram = [
   {
     url: "https://www.instagram.com/reel/C3Yfr7FONtr/",
     type: "reel",
-    title: "Sorriso que nao aparece? Veja o post!"
+    title: "Sorriso que não aparece? Veja o post!"
   },
   {
     url: "https://www.instagram.com/reel/CqYl3UiAIkm/",
     type: "reel",
-    title: "Invisible Aligner e discreto, confortavel e pratico. Veja o post!"
+    title: "Invisible Aligner é discreto, confortável e prático. Veja o post!"
   },
   {
     url: "https://www.instagram.com/reel/DFGidWnyYJF/",
     type: "reel",
-    title: "Transformacao com naturalidade e resultado previsivel. Veja o post!"
+    title: "Transformação com naturalidade e resultado previsível. Veja o post!"
   },
   {
     url: "https://www.instagram.com/reel/DFyTIp0uo4K/",
     type: "reel",
-    title: "A transformacao que voce sempre quis, sem meses de espera. O segredo esta na resina."
+    title: "A transformação que você sempre quis, sem meses de espera. O segredo está na resina."
+  },
+  {
+    url: "https://www.instagram.com/reel/DF6JEvtuRfZ/",
+    type: "reel",
+    title: "Resultado estético com planejamento e segurança clínica."
+  },
+  {
+    url: "https://www.instagram.com/reel/C3tMmWtuC85/",
+    type: "reel",
+    title: "Ortodontia e correções com abordagem moderna."
+  },
+  {
+    url: "https://www.instagram.com/reel/DUjCLLJj6yy/",
+    type: "reel",
+    title: "Confiança, empatia e profissionalismo em cada atendimento."
   }
 ];
 
 const mockFacebook = [
   {
-    title: "Novidade na clinica",
-    text: "Agenda aberta para avaliacao estetica personalizada com foco em naturalidade.",
-    image: "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=800&q=80",
-    date: "Atualizado recentemente",
-    url: "https://www.facebook.com/brambattiodontologia/"
+    title: "Foto oficial da equipe",
+    text: "Dr. Rafael e Dra. Daniela em conteúdo oficial da Brambatti Odontologia.",
+    image: "assets/images/fb-equipe-766724188904248.jpg",
+    date: "Facebook oficial",
+    url: "https://www.facebook.com/brambattiodontologia/photos/dr-rafael-e-dr-daniela-aqui-na-brambatti-odontologia-/766724188904248/"
   },
   {
-    title: "Dica de cuidado diario",
-    text: "Pequenos habitos fazem diferenca na saude bucal e na durabilidade dos tratamentos.",
-    image: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=800&q=80",
-    date: "Post institucional",
-    url: "https://www.facebook.com/brambattiodontologia/"
+    title: "Facetas e estética",
+    text: "Publicação oficial sobre estética e planejamento do sorriso.",
+    image: "assets/images/fb-facetas-4464342056984104.jpg",
+    date: "Facebook oficial",
+    url: "https://www.facebook.com/brambattiodontologia/photos/a.4276380905780221/4464342056984104/?type=3"
+  },
+  {
+    title: "Restauração em resina",
+    text: "Fotos de resultado inicial e final publicadas no perfil oficial.",
+    image: "assets/images/fb-resina-935424452034220.jpg",
+    date: "Facebook oficial",
+    url: "https://www.facebook.com/brambattiodontologia/posts/fotos-inicial-e-final-da-restaura%C3%A7%C3%A3o-de-resina-em-um-dente-molar/935424452034220/"
   }
 ];
 
@@ -397,43 +419,13 @@ function renderReviews(items) {
         <article class="review-card reveal is-visible" data-tilt>
           <header>
             <h3>${name}</h3>
-            <span class="rating" aria-label="Avaliacao ${rating} de 5">${stars(rating)}</span>
+            <span class="rating" aria-label="Avaliação ${rating} de 5">${stars(rating)}</span>
           </header>
           <p>${comment}</p>
         </article>
       `;
     })
     .join("");
-}
-
-async function loadReviews() {
-  const status = document.getElementById("reviews-status");
-  const endpoint = BRAMBATTI_CONFIG.googleReviewsEndpoint?.trim();
-
-  if (!endpoint) {
-    renderReviews(mockReviews);
-    initImageFallbacks();
-    return;
-  }
-
-  try {
-    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const data = await response.json();
-    const reviews = Array.isArray(data) ? data : data.reviews;
-
-    if (!Array.isArray(reviews) || !reviews.length) throw new Error("Sem avaliacoes");
-
-    renderReviews(reviews);
-    if (status) status.textContent = "Avaliacoes carregadas com sucesso da integracao configurada.";
-    initImageFallbacks();
-  } catch (error) {
-    renderReviews(mockReviews);
-    if (status) status.textContent = "Falha na integracao de avaliacoes. Exibindo conteudo mock.";
-    initImageFallbacks();
-    console.warn("Erro ao carregar avaliacoes:", error);
-  }
 }
 
 function renderInstagram(items) {
@@ -448,7 +440,7 @@ function renderInstagram(items) {
       const shortCode = getInstagramCode(rawUrl);
       const url = escapeHtml(rawUrl || "https://www.instagram.com/brambatti_odontologia/");
       const safeCode = escapeHtml(shortCode);
-      const title = escapeHtml(item.title || "Abrir conteudo no Instagram");
+      const title = escapeHtml(item.title || "Abrir conteúdo no Instagram");
       const label = type === "reel" ? "Reel" : "Post";
       return `
         <a class="instagram-link-card reveal is-visible" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Abrir ${label} ${safeCode} no Instagram">
@@ -459,36 +451,6 @@ function renderInstagram(items) {
       `;
     })
     .join("");
-}
-
-async function loadInstagram() {
-  const status = document.getElementById("instagram-status");
-  const endpoint = BRAMBATTI_CONFIG.instagramEndpoint?.trim();
-
-  if (!endpoint) {
-    renderInstagram(mockInstagram);
-    if (status) status.textContent = "Exibindo apenas posts/reels da Brambatti Odontologia por permalinks publicos.";
-    initImageFallbacks();
-    return;
-  }
-
-  try {
-    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const data = await response.json();
-    const posts = Array.isArray(data) ? data : data.posts;
-    if (!Array.isArray(posts) || !posts.length) throw new Error("Sem posts");
-
-    renderInstagram(posts);
-    if (status) status.textContent = "Feed do Instagram carregado da integracao configurada.";
-    initImageFallbacks();
-  } catch (error) {
-    renderInstagram(mockInstagram);
-    if (status) status.textContent = "Falha na integracao da API. Exibindo permalinks publicos.";
-    initImageFallbacks();
-    console.warn("Erro ao carregar Instagram:", error);
-  }
 }
 
 function renderFacebook(items) {
@@ -518,12 +480,43 @@ function renderFacebook(items) {
     .join("");
 }
 
-async function loadFacebook() {
-  const status = document.getElementById("facebook-status");
-  const endpoint = BRAMBATTI_CONFIG.facebookEndpoint?.trim();
+async function loadReviews() {
+  const status = document.getElementById("reviews-status");
+  const endpoint = BRAMBATTI_CONFIG.reviewsEndpoint?.trim();
 
   if (!endpoint) {
-    renderFacebook(mockFacebook);
+    renderReviews(mockReviews);
+    if (status) status.textContent = "Depoimentos reais de clientes da Brambatti Odontologia.";
+    initImageFallbacks();
+    return;
+  }
+
+  try {
+    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    const reviews = Array.isArray(data) ? data : data.reviews;
+    if (!Array.isArray(reviews) || !reviews.length) throw new Error("Sem avaliações");
+
+    renderReviews(reviews);
+    if (status) status.textContent = "Depoimentos atualizados.";
+    initImageFallbacks();
+  } catch (error) {
+    renderReviews(mockReviews);
+    if (status) status.textContent = "Exibindo depoimentos selecionados.";
+    initImageFallbacks();
+    console.warn("Falha ao carregar avaliações:", error);
+  }
+}
+
+async function loadInstagram() {
+  const status = document.getElementById("instagram-status");
+  const endpoint = BRAMBATTI_CONFIG.instagramEndpoint?.trim();
+
+  if (!endpoint) {
+    renderInstagram(mockInstagram);
+    if (status) status.textContent = "Posts e reels oficiais da Brambatti Odontologia.";
     initImageFallbacks();
     return;
   }
@@ -536,14 +529,44 @@ async function loadFacebook() {
     const posts = Array.isArray(data) ? data : data.posts;
     if (!Array.isArray(posts) || !posts.length) throw new Error("Sem posts");
 
+    renderInstagram(posts);
+    if (status) status.textContent = "Conteúdos atualizados.";
+    initImageFallbacks();
+  } catch (error) {
+    renderInstagram(mockInstagram);
+    if (status) status.textContent = "Exibindo conteúdos selecionados.";
+    initImageFallbacks();
+    console.warn("Falha ao carregar Instagram:", error);
+  }
+}
+
+async function loadFacebook() {
+  const status = document.getElementById("facebook-status");
+  const endpoint = BRAMBATTI_CONFIG.facebookEndpoint?.trim();
+
+  if (!endpoint) {
+    renderFacebook(mockFacebook);
+    if (status) status.textContent = "Publicações oficiais da Brambatti Odontologia no Facebook.";
+    initImageFallbacks();
+    return;
+  }
+
+  try {
+    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+    const data = await response.json();
+    const posts = Array.isArray(data) ? data : data.posts;
+    if (!Array.isArray(posts) || !posts.length) throw new Error("Sem publicações");
+
     renderFacebook(posts);
-    if (status) status.textContent = "Conteudo do Facebook carregado da integracao configurada.";
+    if (status) status.textContent = "Publicações atualizadas.";
     initImageFallbacks();
   } catch (error) {
     renderFacebook(mockFacebook);
-    if (status) status.textContent = "Falha na integracao do Facebook. Exibindo conteudo mock.";
+    if (status) status.textContent = "Exibindo publicações selecionadas.";
     initImageFallbacks();
-    console.warn("Erro ao carregar Facebook:", error);
+    console.warn("Falha ao carregar Facebook:", error);
   }
 }
 
@@ -562,7 +585,7 @@ function init() {
   initCounters();
   initImageFallbacks();
   setFooterYear();
-  loadReviews().then(initTiltEffects);
+  loadReviews();
   loadInstagram();
   loadFacebook();
 }
