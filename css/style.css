@@ -44,6 +44,11 @@ img {
   display: block;
 }
 
+img.is-fallback {
+  object-fit: cover;
+  background: linear-gradient(135deg, #f4efe6, #e7d8c5);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -954,6 +959,55 @@ section {
   overflow: hidden;
 }
 
+.location-info-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.location-info-card {
+  background: rgba(255, 252, 248, 0.84);
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 10px 24px rgba(59, 42, 31, 0.08);
+  padding: 1.05rem 1rem;
+}
+
+.location-info-card h3 {
+  margin: 0;
+  color: var(--brown-dark);
+  font-size: 1rem;
+}
+
+.location-info-card p {
+  margin: 0.55rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+}
+
+.hours-list {
+  list-style: none;
+  margin: 0.55rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.42rem;
+}
+
+.hours-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.85rem;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+
+.hours-list strong {
+  color: var(--brown-dark);
+  font-weight: 600;
+  text-align: right;
+}
+
 .insights-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1000,6 +1054,12 @@ section {
   margin: 0.55rem 0 0;
   color: var(--text-soft);
   font-size: 0.92rem;
+}
+
+.insight-card .text-link {
+  display: inline-block;
+  margin-top: 0.65rem;
+  font-size: 0.86rem;
 }
 
 .final-cta {
@@ -1206,7 +1266,8 @@ section {
   .reviews-grid,
   .metrics-panel,
   .team-grid,
-  .insights-grid {
+  .insights-grid,
+  .location-info-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1302,8 +1363,18 @@ section {
   .post-grid,
   .metrics-panel,
   .team-grid,
-  .insights-grid {
+  .insights-grid,
+  .location-info-grid {
     grid-template-columns: 1fr;
+  }
+
+  .hours-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hours-list strong {
+    text-align: left;
   }
 
   .facebook-card {

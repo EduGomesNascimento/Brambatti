@@ -46,17 +46,17 @@ const mockInstagram = [
   {
     image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=700&q=80",
     caption: "Antes e depois com naturalidade.",
-    url: "https://www.instagram.com/brambatti_odontologia/"
+    url: "https://www.instagram.com/p/DA0nbi3uxiZ/"
   },
   {
     image: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=700&q=80",
     caption: "Clareamento com planejamento individual.",
-    url: "https://www.instagram.com/brambatti_odontologia/"
+    url: "https://www.instagram.com/p/DSlOThWErZp/"
   },
   {
     image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=700&q=80",
     caption: "Ambiente pensado para seu conforto.",
-    url: "https://www.instagram.com/brambatti_odontologia/"
+    url: "https://www.instagram.com/p/DS5Eg7VjuAC/"
   },
   {
     image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=700&q=80",
@@ -69,7 +69,7 @@ const mockInstagram = [
     url: "https://www.instagram.com/brambatti_odontologia/"
   },
   {
-    image: "https://images.unsplash.com/photo-1666214280775-2dbf3a6b9e77?auto=format&fit=crop&w=700&q=80",
+    image: "https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1?auto=format&fit=crop&w=700&q=80",
     caption: "Estetica avancada com seguranca clinica.",
     url: "https://www.instagram.com/brambatti_odontologia/"
   }
@@ -297,6 +297,23 @@ function initCounters() {
   counters.forEach((counter) => observer.observe(counter));
 }
 
+function initImageFallbacks() {
+  const fallbackSrc = "assets/images/photo-fallback.svg";
+  const images = document.querySelectorAll("img");
+  if (!images.length) return;
+
+  images.forEach((img) => {
+    if (img.dataset.fallbackBound === "true") return;
+    img.dataset.fallbackBound = "true";
+    img.addEventListener("error", () => {
+      if (img.dataset.fallbackApplied === "true") return;
+      img.dataset.fallbackApplied = "true";
+      img.src = fallbackSrc;
+      img.classList.add("is-fallback");
+    });
+  });
+}
+
 function renderReviews(items) {
   const grid = document.getElementById("reviews-grid");
   if (!grid) return;
@@ -326,6 +343,7 @@ async function loadReviews() {
 
   if (!endpoint) {
     renderReviews(mockReviews);
+    initImageFallbacks();
     return;
   }
 
@@ -340,9 +358,11 @@ async function loadReviews() {
 
     renderReviews(reviews);
     if (status) status.textContent = "Avaliacoes carregadas com sucesso da integracao configurada.";
+    initImageFallbacks();
   } catch (error) {
     renderReviews(mockReviews);
     if (status) status.textContent = "Falha na integracao de avaliacoes. Exibindo conteudo mock.";
+    initImageFallbacks();
     console.warn("Erro ao carregar avaliacoes:", error);
   }
 }
@@ -372,6 +392,7 @@ async function loadInstagram() {
 
   if (!endpoint) {
     renderInstagram(mockInstagram);
+    initImageFallbacks();
     return;
   }
 
@@ -385,9 +406,11 @@ async function loadInstagram() {
 
     renderInstagram(posts);
     if (status) status.textContent = "Feed do Instagram carregado da integracao configurada.";
+    initImageFallbacks();
   } catch (error) {
     renderInstagram(mockInstagram);
     if (status) status.textContent = "Falha na integracao do Instagram. Exibindo conteudo mock.";
+    initImageFallbacks();
     console.warn("Erro ao carregar Instagram:", error);
   }
 }
@@ -425,6 +448,7 @@ async function loadFacebook() {
 
   if (!endpoint) {
     renderFacebook(mockFacebook);
+    initImageFallbacks();
     return;
   }
 
@@ -438,9 +462,11 @@ async function loadFacebook() {
 
     renderFacebook(posts);
     if (status) status.textContent = "Conteudo do Facebook carregado da integracao configurada.";
+    initImageFallbacks();
   } catch (error) {
     renderFacebook(mockFacebook);
     if (status) status.textContent = "Falha na integracao do Facebook. Exibindo conteudo mock.";
+    initImageFallbacks();
     console.warn("Erro ao carregar Facebook:", error);
   }
 }
@@ -458,6 +484,7 @@ function init() {
   initHeroParallax();
   initTiltEffects();
   initCounters();
+  initImageFallbacks();
   setFooterYear();
   loadReviews().then(initTiltEffects);
   loadInstagram();
