@@ -93,6 +93,10 @@ section {
   margin-inline: auto;
 }
 
+.inner-page main {
+  padding-top: 86px;
+}
+
 .section-alt {
   background: linear-gradient(180deg, rgba(231, 216, 197, 0.6), rgba(231, 216, 197, 0.96));
 }
@@ -207,6 +211,15 @@ section {
   transform-origin: left;
 }
 
+.main-nav a[aria-current="page"] {
+  font-weight: 700;
+}
+
+.main-nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
 .site-header.is-solid .main-nav a {
   color: var(--brown-dark);
 }
@@ -244,6 +257,35 @@ section {
 
 .site-header.is-solid .menu-toggle span {
   background: var(--brown-dark);
+}
+
+.inner-page .site-header {
+  background: rgba(244, 239, 230, 0.94);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 28px rgba(26, 26, 26, 0.08);
+  border-bottom-color: var(--line-soft);
+}
+
+.inner-page .main-nav a {
+  color: var(--brown-dark);
+}
+
+.inner-page .menu-toggle span {
+  background: var(--brown-dark);
+}
+
+.page-intro {
+  padding: clamp(34px, 5vw, 62px) 0 0;
+}
+
+.page-intro .section-title {
+  max-width: 18ch;
+}
+
+.page-intro p {
+  margin: 1rem 0 0;
+  max-width: 60ch;
+  color: var(--text-soft);
 }
 
 .hero {
