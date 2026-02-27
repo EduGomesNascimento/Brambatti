@@ -433,6 +433,15 @@ section {
   transition: transform var(--speed-base), box-shadow var(--speed-base), border-color var(--speed-base);
 }
 
+.hero-photo-stack img.hero-cutout {
+  width: 84%;
+  object-fit: contain;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.4));
+}
+
 .hero-photo-stack img:first-child {
   position: absolute;
   inset: 0 auto auto 0;
@@ -928,9 +937,22 @@ section {
   object-position: center top;
 }
 
+.team-card img.team-cutout {
+  aspect-ratio: 16 / 11;
+  object-fit: contain;
+  object-position: center bottom;
+  padding: 1rem 1rem 0;
+  background: linear-gradient(180deg, rgba(255, 248, 239, 0.2), rgba(255, 248, 239, 0.04));
+}
+
 .team-card:hover img {
   transform: scale(1.05);
   filter: saturate(1.04);
+}
+
+.team-card:hover img.team-cutout {
+  transform: translateY(-2px) scale(1.02);
+  filter: none;
 }
 
 .team-info {
