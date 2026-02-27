@@ -11,34 +11,104 @@ const BRAMBATTI_CONFIG = {
 
 const mockReviews = [
   {
-    name: "Carla M.",
+    name: "Cesar Britz",
     rating: 5,
-    comment: "Atendimento impecavel. Tudo muito bem explicado e o resultado estetico ficou natural."
+    comment: "Excelente profissional, muito atencioso e gentil, com grande qualidade e perfeccionismo nos trabalhos."
   },
   {
-    name: "Joao P.",
+    name: "Ana Maria Malvarez",
     rating: 5,
-    comment: "Ambiente confortavel, equipe atenciosa e excelente tecnologia na avaliacao."
+    comment: "Minha experiencia foi simplesmente perfeita. Atendimento acolhedor, respeitoso e com extrema qualidade humana."
   },
   {
-    name: "Vanessa R.",
+    name: "Julia Couto",
     rating: 5,
-    comment: "Fiz clareamento e amei o resultado. Profissionais cuidadosos e muito humanos."
+    comment: "Otimos profissionais e equipe com excelencia. Higiene, cuidados e ambiente impecaveis. Sou paciente ha mais de 10 anos."
   },
   {
-    name: "Lucas F.",
+    name: "Brenda Brambatti Mentz",
     rating: 5,
-    comment: "Planejamento completo e transparente. Me senti seguro em cada etapa do tratamento."
+    comment: "Atendimento muito bom, profissionais e servico de qualidade. Super atenciosos."
   },
   {
-    name: "Patricia S.",
+    name: "Andre Machado",
     rating: 5,
-    comment: "Clinica linda, atendimento no horario e otima experiencia do inicio ao fim."
+    comment: "Dr. Rafael e um profissional diferenciado, com calma e dedicacao em cada procedimento e explicacoes claras."
   },
   {
-    name: "Bruno T.",
+    name: "Christofer Lutz",
     rating: 5,
-    comment: "Excelente equipe. Resolvi uma reabilitacao com conforto e confianca."
+    comment: "Profissionais excelentes, competentes, educados e eticos. Ambiente confortavel e muito bem higienizado."
+  },
+  {
+    name: "Laura Angelina",
+    rating: 5,
+    comment: "Sou paciente ha anos e sempre fui muito bem atendida. Servico de primeira qualidade."
+  },
+  {
+    name: "Onira Bonifacio",
+    rating: 5,
+    comment: "Grande diferencial no atendimento, da recepcao ao consultorio, em um espaco amplo e bem estruturado."
+  },
+  {
+    name: "Liane Maria de Freitas",
+    rating: 5,
+    comment: "Excelente atendimento de toda a equipe da clinica. Me sinto feliz em ser cliente ha mais de 25 anos."
+  },
+  {
+    name: "Jorge Dahmer",
+    rating: 5,
+    comment: "Equipe excelente e muito competente. Atendimento diferenciado e de alto nivel."
+  },
+  {
+    name: "Carem Metz",
+    rating: 5,
+    comment: "Atendimento sensacional desde a recepcao. Equipe especializada e muito atenciosa."
+  },
+  {
+    name: "Lisa Fraga",
+    rating: 5,
+    comment: "Atendimento de qualidade, pontualidade e profissionais capacitados e competentes."
+  },
+  {
+    name: "Liziane Muller",
+    rating: 5,
+    comment: "Hoje nao tenho mais medo de ir ao dentista. Equipe paciente, atenciosa e extremamente competente."
+  },
+  {
+    name: "Xena Guerreira",
+    rating: 5,
+    comment: "Otimos profissionais, atendimento excelente e valores acessiveis para a qualidade do trabalho."
+  },
+  {
+    name: "Ana Rita Zanatta",
+    rating: 5,
+    comment: "Melhor atendimento, sorriso renovado e autoestima la em cima. Super recomendo."
+  },
+  {
+    name: "Paulo Winter",
+    rating: 5,
+    comment: "Profissionais e auxiliares transmitem confianca e seguranca e finalizam com trabalho perfeito."
+  },
+  {
+    name: "Lisete Debacker",
+    rating: 5,
+    comment: "Atendimento sempre excelente, com experiencia e seguranca em todos os procedimentos."
+  },
+  {
+    name: "Marcelo Schossler",
+    rating: 5,
+    comment: "Excelente atendimento e higiene. Profissionais qualificados, dedicados e atenciosos."
+  },
+  {
+    name: "Gilberto Dorneles Ebert",
+    rating: 5,
+    comment: "Otima experiencia na clinica. Tratamento de excelencia e equipe muito querida."
+  },
+  {
+    name: "Felipe Strieder",
+    rating: 5,
+    comment: "Excelente atendimento e profissionais incriveis."
   }
 ];
 
@@ -345,7 +415,7 @@ function renderReviews(items) {
   const grid = document.getElementById("reviews-grid");
   if (!grid) return;
 
-  const safeItems = Array.isArray(items) ? items.slice(0, 6) : [];
+  const safeItems = Array.isArray(items) ? items.slice(0, 12) : [];
   grid.innerHTML = safeItems
     .map((item) => {
       const name = escapeHtml(item.name || "Paciente");
