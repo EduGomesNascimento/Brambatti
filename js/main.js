@@ -44,34 +44,52 @@ const mockReviews = [
 
 const mockInstagram = [
   {
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=700&q=80",
-    caption: "Antes e depois com naturalidade.",
-    url: "https://www.instagram.com/p/DA0nbi3uxiZ/"
+    url: "https://www.instagram.com/p/DFtIDZfSogd/",
+    type: "post"
   },
   {
-    image: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=700&q=80",
-    caption: "Clareamento com planejamento individual.",
-    url: "https://www.instagram.com/p/DSlOThWErZp/"
+    url: "https://www.instagram.com/p/DKIKKc8xrVa/",
+    type: "post"
   },
   {
-    image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=700&q=80",
-    caption: "Ambiente pensado para seu conforto.",
-    url: "https://www.instagram.com/p/DS5Eg7VjuAC/"
+    url: "https://www.instagram.com/p/DTVeZzkESQS/",
+    type: "post"
   },
   {
-    image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=700&q=80",
-    caption: "Recepcao acolhedora e atendimento humanizado.",
-    url: "https://www.instagram.com/brambatti_odontologia/"
+    url: "https://www.instagram.com/p/DSM0YXxjkDA/",
+    type: "post"
   },
   {
-    image: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=700&q=80",
-    caption: "Equipe preparada para transformar sorrisos.",
-    url: "https://www.instagram.com/brambatti_odontologia/"
+    url: "https://www.instagram.com/p/DA0nbi3uxiZ/",
+    type: "post"
   },
   {
-    image: "https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1?auto=format&fit=crop&w=700&q=80",
-    caption: "Estetica avancada com seguranca clinica.",
-    url: "https://www.instagram.com/brambatti_odontologia/"
+    url: "https://www.instagram.com/p/CyixhrnuzKi/",
+    type: "post"
+  },
+  {
+    url: "https://www.instagram.com/p/CqoKPYQubqr/",
+    type: "post"
+  },
+  {
+    url: "https://www.instagram.com/reel/DFyTIp0uo4K/",
+    type: "reel"
+  },
+  {
+    url: "https://www.instagram.com/reel/DFGidWnyYJF/",
+    type: "reel"
+  },
+  {
+    url: "https://www.instagram.com/reel/DF6JEvtuRfZ/",
+    type: "reel"
+  },
+  {
+    url: "https://www.instagram.com/reel/DUjCLLJj6yy/",
+    type: "reel"
+  },
+  {
+    url: "https://www.instagram.com/reel/DS7ct4Jjh6V/",
+    type: "reel"
   }
 ];
 
@@ -104,6 +122,15 @@ function escapeHtml(value = "") {
 function stars(rating = 5) {
   const count = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
   return `${"\u2605".repeat(count)}${"\u2606".repeat(5 - count)}`;
+}
+
+function getInstagramType(url = "") {
+  return url.includes("/reel/") ? "reel" : "post";
+}
+
+function getInstagramCode(url = "") {
+  const match = url.match(/instagram\.com\/(?:p|reel)\/([^/?#]+)/i);
+  return match ? match[1] : "instagram";
 }
 
 function initMenu() {
@@ -371,15 +398,20 @@ function renderInstagram(items) {
   const grid = document.getElementById("instagram-grid");
   if (!grid) return;
 
-  const safeItems = Array.isArray(items) ? items.slice(0, 6) : [];
+  const safeItems = Array.isArray(items) ? items.slice(0, 12) : [];
   grid.innerHTML = safeItems
-    .map((post) => {
-      const image = escapeHtml(post.image || "");
-      const caption = escapeHtml(post.caption || "Post do Instagram");
-      const url = escapeHtml(post.url || "https://www.instagram.com/brambatti_odontologia/");
+    .map((item) => {
+      const rawUrl = typeof item === "string" ? item : item.url || item.permalink || "";
+      const type = (item.type || getInstagramType(rawUrl)).toLowerCase() === "reel" ? "reel" : "post";
+      const shortCode = getInstagramCode(rawUrl);
+      const url = escapeHtml(rawUrl || "https://www.instagram.com/brambatti_odontologia/");
+      const safeCode = escapeHtml(shortCode);
+      const label = type === "reel" ? "Reel" : "Post";
       return `
-        <a class="post-card reveal is-visible" href="${url}" data-caption="${caption}" target="_blank" rel="noopener noreferrer" aria-label="${caption}">
-          <img src="${image}" alt="${caption}" loading="lazy">
+        <a class="instagram-link-card reveal is-visible" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Abrir ${label} ${safeCode} no Instagram">
+          <span class="instagram-type ${type}">${label}</span>
+          <h4 class="instagram-code">${safeCode}</h4>
+          <p class="instagram-link-meta">Abrir no Instagram</p>
         </a>
       `;
     })
@@ -392,6 +424,7 @@ async function loadInstagram() {
 
   if (!endpoint) {
     renderInstagram(mockInstagram);
+    if (status) status.textContent = "Exibindo grade por permalinks publicos (posts e reels).";
     initImageFallbacks();
     return;
   }
@@ -409,7 +442,7 @@ async function loadInstagram() {
     initImageFallbacks();
   } catch (error) {
     renderInstagram(mockInstagram);
-    if (status) status.textContent = "Falha na integracao do Instagram. Exibindo conteudo mock.";
+    if (status) status.textContent = "Falha na integracao da API. Exibindo permalinks publicos.";
     initImageFallbacks();
     console.warn("Erro ao carregar Instagram:", error);
   }

@@ -791,6 +791,76 @@ section {
   color: var(--text-soft);
 }
 
+.instagram-link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.instagram-link-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.88rem 0.85rem;
+  transition: transform var(--speed-base), border-color var(--speed-base), box-shadow var(--speed-base);
+}
+
+.instagram-link-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(195, 42, 163, 0.08), rgba(255, 193, 7, 0.08));
+  opacity: 0;
+  transition: opacity var(--speed-fast);
+}
+
+.instagram-link-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--line);
+  box-shadow: 0 12px 22px rgba(59, 42, 31, 0.1);
+}
+
+.instagram-link-card:hover::before {
+  opacity: 1;
+}
+
+.instagram-link-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.instagram-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 0.45rem;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  background: #9b3f6f;
+}
+
+.instagram-type.reel {
+  background: #d06b19;
+}
+
+.instagram-code {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--brown-dark);
+  font-weight: 600;
+}
+
+.instagram-link-meta {
+  margin: 0.38rem 0 0;
+  font-size: 0.84rem;
+  color: var(--text-soft);
+}
+
 .team {
   background:
     radial-gradient(circle at 12% 18%, rgba(231, 216, 197, 0.12), transparent 38%),
@@ -1264,6 +1334,7 @@ section {
   .cards-grid,
   .treatments-grid,
   .reviews-grid,
+  .instagram-link-grid,
   .metrics-panel,
   .team-grid,
   .insights-grid,
@@ -1360,6 +1431,7 @@ section {
   .cards-grid,
   .treatments-grid,
   .reviews-grid,
+  .instagram-link-grid,
   .post-grid,
   .metrics-panel,
   .team-grid,
