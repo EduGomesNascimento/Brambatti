@@ -114,52 +114,24 @@ const mockReviews = [
 
 const mockInstagram = [
   {
-    url: "https://www.instagram.com/p/DFtIDZfSogd/",
-    type: "post"
+    url: "https://www.instagram.com/reel/C3Yfr7FONtr/",
+    type: "reel",
+    title: "Sorriso que nao aparece? Veja o post!"
   },
   {
-    url: "https://www.instagram.com/p/DKIKKc8xrVa/",
-    type: "post"
-  },
-  {
-    url: "https://www.instagram.com/p/DTVeZzkESQS/",
-    type: "post"
-  },
-  {
-    url: "https://www.instagram.com/p/DSM0YXxjkDA/",
-    type: "post"
-  },
-  {
-    url: "https://www.instagram.com/p/DA0nbi3uxiZ/",
-    type: "post"
-  },
-  {
-    url: "https://www.instagram.com/p/CyixhrnuzKi/",
-    type: "post"
-  },
-  {
-    url: "https://www.instagram.com/p/CqoKPYQubqr/",
-    type: "post"
-  },
-  {
-    url: "https://www.instagram.com/reel/DFyTIp0uo4K/",
-    type: "reel"
+    url: "https://www.instagram.com/reel/CqYl3UiAIkm/",
+    type: "reel",
+    title: "Invisible Aligner e discreto, confortavel e pratico. Veja o post!"
   },
   {
     url: "https://www.instagram.com/reel/DFGidWnyYJF/",
-    type: "reel"
+    type: "reel",
+    title: "Transformacao com naturalidade e resultado previsivel. Veja o post!"
   },
   {
-    url: "https://www.instagram.com/reel/DF6JEvtuRfZ/",
-    type: "reel"
-  },
-  {
-    url: "https://www.instagram.com/reel/DUjCLLJj6yy/",
-    type: "reel"
-  },
-  {
-    url: "https://www.instagram.com/reel/DS7ct4Jjh6V/",
-    type: "reel"
+    url: "https://www.instagram.com/reel/DFyTIp0uo4K/",
+    type: "reel",
+    title: "A transformacao que voce sempre quis, sem meses de espera. O segredo esta na resina."
   }
 ];
 
@@ -468,7 +440,7 @@ function renderInstagram(items) {
   const grid = document.getElementById("instagram-grid");
   if (!grid) return;
 
-  const safeItems = Array.isArray(items) ? items.slice(0, 12) : [];
+  const safeItems = Array.isArray(items) ? items.slice(0, 8) : [];
   grid.innerHTML = safeItems
     .map((item) => {
       const rawUrl = typeof item === "string" ? item : item.url || item.permalink || "";
@@ -476,12 +448,13 @@ function renderInstagram(items) {
       const shortCode = getInstagramCode(rawUrl);
       const url = escapeHtml(rawUrl || "https://www.instagram.com/brambatti_odontologia/");
       const safeCode = escapeHtml(shortCode);
+      const title = escapeHtml(item.title || "Abrir conteudo no Instagram");
       const label = type === "reel" ? "Reel" : "Post";
       return `
         <a class="instagram-link-card reveal is-visible" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="Abrir ${label} ${safeCode} no Instagram">
           <span class="instagram-type ${type}">${label}</span>
           <h4 class="instagram-code">${safeCode}</h4>
-          <p class="instagram-link-meta">Abrir no Instagram</p>
+          <p class="instagram-link-meta">${title}</p>
         </a>
       `;
     })
@@ -494,7 +467,7 @@ async function loadInstagram() {
 
   if (!endpoint) {
     renderInstagram(mockInstagram);
-    if (status) status.textContent = "Exibindo grade por permalinks publicos (posts e reels).";
+    if (status) status.textContent = "Exibindo apenas posts/reels da Brambatti Odontologia por permalinks publicos.";
     initImageFallbacks();
     return;
   }
